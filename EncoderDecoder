@@ -1,0 +1,60 @@
+/*Project6.java
+Author: Karl Edler
+10/11/13
+The purpose of this program is to 
+encode or decode the user input, 
+mimicking the caesar cipher.
+*/
+import java.util.Scanner;
+
+public class Project6
+{
+public static void main (String [] args)
+   {
+   String input;
+   String code;
+   int key;
+   
+   Scanner scan = new Scanner(System.in);
+   
+   System.out.println ("Input String (letters only - no punctuation):");
+   input = scan.nextLine();
+   String Uppercase = input.toUpperCase();
+   int input_length = Uppercase.length();
+   System.out.println ("Encode or decode?:");
+   code = scan.nextLine();
+   System.out.println ("Input key:");
+   key = scan.nextInt();
+   char encode = code.charAt(0);
+   //determines whether the user typed in encode or decode
+   int x = 0;
+   int lettervalue;
+   char letter;
+      
+      if (encode == 'e'|| encode == 'E')
+         {while (x <input_length)
+            {
+           letter  = Uppercase.charAt(x);
+        //turns each letter into an integer, adds the key,
+        //and then turns the integer back to a letter
+            lettervalue = (int) (letter - 'A' + key)%26;
+            System.out.print ((char)((letter - 'A' + key)%26 + 'A'));
+            x++;
+            }
+         
+         }
+     else 
+         {while (x <input_length)
+            {
+            letter  = Uppercase.charAt(x);
+           
+            lettervalue = (int) (letter - 'A' - key + 26)%26;
+            System.out.print ((char)((letter - 'A' - key + 26)%26 + 'A'));
+            x++;
+            }
+
+         }
+        
+        
+   }
+}
