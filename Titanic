@@ -1,0 +1,176 @@
+Karl Edler
+
+//  Passenger.java
+
+public class Passenger
+{
+   private char sex;
+   private int status;
+   private boolean child, survivor;
+
+      //--------------------------------------------------------
+   public Passenger (int status, boolean child, char sex, boolean survivor)
+   {
+      this.status = status;
+      this.child = child;
+      this.sex = sex;
+      this.survivor = survivor;
+   }
+
+      //--------------------------------------------------------
+   public String toString()
+   {
+
+      String description;
+
+      description = status + "\t" + sex + "\t";
+      
+     if (child)
+         description += "\t" + "Child";
+      else
+         description += "\t" + "Adult";
+      if (survivor)
+         description += "\t" + "Survived";
+      else
+         description += "\t" + "Deceased";
+
+      return description;
+   }
+}
+
+//  PassengerData.java
+
+public class PassengerData
+{
+   private Passenger[] collection;
+   private int count, numSurvivors;
+   
+   
+   //-----------------------------------------------------------
+   public PassengerData ()
+   {
+      collection = new Passenger[100];
+      count = 0;
+      numSurvivors = 0;
+   }
+
+      //--------------------------------------------------------
+   public void addPassenger (int status, boolean child, char sex, boolean survivor)
+   {
+      if (count == collection.length)
+         increaseSize();
+
+      collection[count] = new Passenger (status, child, sex, survivor);
+      count++;
+         if (survivor == true)
+      numSurvivors++;
+   }
+
+   //-----------------------------------------------------------
+   
+   public String toString()
+   {
+
+      String report = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+      report += "Titanic Data\n\n";
+
+      report += "Number of Passengers: " + count + "\n";
+      report += "Number of survivors: " + numSurvivors + "\n";
+
+      report += "\n\nPassenger List:\n\n";
+
+      for (int passenger = 0; passenger < count; passenger++)
+         report += collection[passenger].toString() + "\n";
+
+      return report;
+   }
+
+   
+   //-----------------------------------------------------------
+   private void increaseSize ()
+   {
+      Passenger[] temp = new Passenger[collection.length * 2];
+
+      for (int passenger = 0; passenger < collection.length; passenger++)
+         temp[passenger] = collection[passenger];
+
+      collection = temp;
+   }
+}
+
+//  TitanicTester.java       
+
+   public class TitanicTester 
+{ 
+ public static void main(String[] args) 
+ { 
+ PassengerData titanic = new PassengerData(); 
+ 
+ titanic.addPassenger (4, false, 'm', false); 
+ titanic.addPassenger (3, false, 'f', false); 
+ titanic.addPassenger (1, true, 'm', true); 
+ titanic.addPassenger (2, false, 'm', false); 
+ titanic.addPassenger (3, true, 'f', true); 
+
+ System.out.println(titanic); 
+ 
+ titanic.addPassenger (3, true, 'm', false); 
+ titanic.addPassenger (1, true, 'f', false); 
+ titanic.addPassenger (3, false, 'f', false); 
+ System.out.println(titanic); 
+ } 
+}  
+
+//  Titanic.java       
+
+import java.util.Scanner;
+import java.io.*;
+
+public class Titanic
+{
+      public static void main (String[] args) throws IOException
+   {
+      String sex;
+      int status, first=0, second=0, third=0, fourth=0, children=0, survivors=0, men=0, women=0;
+      boolean child, survivor;
+      Scanner fileScan;
+
+      File myFile = new File("titanicdata.inp");
+      fileScan = new Scanner (myFile);
+
+      
+      while (fileScan.hasNext())
+      {
+         status = fileScan.nextInt();
+         if (status == 1)
+         first++;
+         if (status == 2)
+         second++;
+         if (status == 3)
+        third++;
+         if (status == 4)
+         fourth++;
+         child = fileScan.nextBoolean();
+         if (child == true)
+         children++;
+         sex = fileScan.next();
+         if (sex.charAt(0) == 'm')
+         men++;
+         else
+         women++;
+         survivor = fileScan.nextBoolean();
+        if(survivor == true)
+         survivors++;
+      }
+         System.out.println ("Number of people in First Class: " + first);
+         System.out.println ("Number of people in Second Class: " + second);
+         System.out.println ("Number of people in Third Class: " + third);
+         System.out.println ("Number of people in Fourth Class: " + fourth);
+         System.out.println ("Number of Children: " + children);
+        System.out.println ("Number of Men: " + men);
+         System.out.println ("Number of Women: " + women);
+         System.out.println ("Number of Survivors: " + survivors);
+     
+   }
+}
+
