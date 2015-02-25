@@ -1,0 +1,281 @@
+
+
+//Halloween.java
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Halloween
+{
+      public static void main (String[] args)
+   {
+      JFrame frame = new JFrame ("Halloween");
+      frame.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+      
+      JPanel primary = new JPanel();
+      primary.setBackground (Color.orange);
+      primary.setPreferredSize (new Dimension(1200, 450));
+      
+      JPanel subpanel1 = new HalloweenPanel();
+      JPanel subpanel2 = new HalloweenPanel();
+      
+      primary.add (subpanel1);
+      primary.add (subpanel2);
+
+      frame.getContentPane().add(primary);
+
+      frame.pack();
+      frame.setVisible(true);
+   }
+}
+
+
+
+
+
+//  HalloweenPanel.java  
+     
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
+
+public class HalloweenPanel extends JPanel
+{
+   private Pumpkin circle1, circle2, circle3, circle4, circle5, circle6;
+   private Smiley smile1, smile2, smile3;
+   
+ 
+
+      public HalloweenPanel()
+      {
+      Random generator = new Random();
+      int num1;
+      int num2;
+      int num3;
+   
+      num1 = generator.nextInt(400);
+      num2 = generator.nextInt(400);
+      num3 = generator.nextInt(400);
+
+ 
+      circle1 = new Pumpkin (num1, 35);
+      circle2 = new Pumpkin (num2, 20, "Bob", true,true);
+      circle3 = new Pumpkin (300, 85, "Rob", false,true);
+      circle4 = new Pumpkin (100, 200);
+      circle5 = new Pumpkin (200, 200, "Barry", true,false);
+      circle6 = new Pumpkin (300, 300);
+      smile1 = new Smiley (Color.red, num3, 35, "Jake", 13, true);
+      smile2 = new Smiley (Color.green, 400, 125, "Drake", 25, false);
+      smile3 = new Smiley (Color.cyan, 400, 285);
+      
+
+      setPreferredSize (new Dimension(550, 400));
+     setBackground (Color.black);
+   }
+   
+  
+   public void paintComponent (Graphics page)
+   {
+      super.paintComponent(page);
+
+      circle1.draw(page);
+      circle2.draw(page);
+      circle3.draw(page);
+      circle4.draw(page);
+      circle5.draw(page);
+      circle6.draw(page);
+      smile1.draw(page);
+      smile2.draw(page);
+      smile3.draw(page);
+      
+       
+   }
+}
+
+//  Pumpkin.java    
+
+import java.awt.*;
+
+public class Pumpkin
+{
+   private int DIAMETER = 50, x, y, leaf;
+   private Color color;
+   private String name;
+   private boolean ripe, face;
+
+   
+   public Pumpkin (int upperX, int upperY)
+   {
+      x = upperX;
+      y = upperY;
+      name = "Pumpkin";
+   }
+   
+   public Pumpkin (int upperX, int upperY, String a, boolean z, boolean b)
+   {
+      x = upperX;
+      y = upperY;
+      name = a;
+      ripe = z;
+      face = b;
+      
+   }
+
+
+   public void draw (Graphics page)
+   {
+         if (ripe == true)
+         {
+         page.setColor (Color.green);
+         page.fillRect (x,y,10,35);
+         page.fillOval (x+8, y+20, 20, 10);
+         }
+         else
+         {
+         Color brown = new Color(139, 69, 19);
+         page.setColor (brown);
+         page.fillRect (x,y,10,35);
+         page.fillOval (x+8, y+20, 20, 10);
+         }
+         
+         
+      page.setColor (Color.orange);
+      page.fillOval (x-35, y+25, DIAMETER, DIAMETER);
+      page.fillOval (x-10, y+25,DIAMETER, DIAMETER);
+      
+      page.setColor (Color.black);
+      page.drawArc (x-25,y+25,DIAMETER,DIAMETER,260,-160);
+      page.drawArc (x-20,y+25,DIAMETER,DIAMETER,280,160);
+      
+         
+      
+      page.setColor (Color.white);
+      page.drawString (name, x-20, y+90);
+      
+         if (face == true)
+         {
+         page.setColor (Color.black);
+         page.fillOval (x-3, y+30, 10, 15);
+         page.fillOval (x+8, y+30, 10, 15);
+         page.drawArc (x, y+50, 15, 10, 180, 180);
+         }
+         else
+         {
+         
+         }
+
+   }
+
+}
+
+//  Smiley.java       
+
+import java.awt.*;
+
+public class Smiley
+{
+   private int DIAMETER = 50, x, y, age;
+   private Color color;
+   private String name;
+   boolean happiness;
+
+   
+   public Smiley (Color shade, int upperX, int upperY)
+   {
+      color = shade;
+     x = upperX;
+      y = upperY;
+      name = "Smiley";
+      age = 0;
+      happiness = true;
+   }
+   
+   public Smiley (Color shade, int upperX, int upperY, String a, int b, boolean z)
+   {
+     color = shade;
+      x = upperX;
+     y = upperY;
+      name = a;
+      age = b;
+      happiness = z;
+   }
+
+   //-----------------------------------------------------------
+   //  Draws this circle in the specified graphics context.
+   //-----------------------------------------------------------
+   public void draw (Graphics page)
+   {
+      page.setColor (color);
+      page.fillOval (x, y, DIAMETER, DIAMETER);
+      
+         if (happiness == true)
+         {
+         page.setColor (Color.black);
+         page.fillOval (x+8, y+8, 10, 15);
+         page.fillOval (x+20, y+8, 10, 15);
+         page.drawArc (x+20, y+30, 15, 10, 180, 180);
+         }
+         else
+         {
+         page.setColor (Color.black);
+         page.fillOval (x+8, y+8, 10, 15);
+         page.fillOval (x+20, y+8, 10, 15);
+         page.drawArc (x+20, y+30, 15, 10, 0, 180);
+         }
+
+      
+      page.setColor (Color.white);
+      page.drawString (name, x+15, y+60);
+   }
+
+   
+   //-----------------------------------------------------------------
+   //  Color mutator.
+   //-----------------------------------------------------------------
+   public void setColor (Color shade)
+   {
+      color = shade;
+   }
+
+   //-----------------------------------------------------------------
+   //  X mutator.
+   //-----------------------------------------------------------------
+   public void setX (int upperX)
+   {
+      x = upperX;
+   }
+
+
+   //-----------------------------------------------------------------
+   //  Y mutator.
+   //-----------------------------------------------------------------
+   public void setY (int upperY)
+   {
+     y = upperY;
+   }
+
+   
+   //-----------------------------------------------------------------
+   //  Color accessor.
+   //-----------------------------------------------------------------
+   public Color getColor ()
+   {
+      return color;
+   }
+
+   //-----------------------------------------------------------------
+   //  X accessor.
+   //-----------------------------------------------------------------
+   public int getX ()
+   {
+      return x;
+   }
+
+   //-----------------------------------------------------------------
+   //  Y accessor.
+   //-----------------------------------------------------------------
+   public int getY ()
+   {
+      return y;
+   }
+}
