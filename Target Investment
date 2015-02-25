@@ -1,0 +1,57 @@
+
+/*project9.java
+Author: Karl Edler
+11/13/13
+The objective of this program is to figure out
+how many years it will take for an initial investment
+to reach the target investment with the specifiied interest rate.
+The program uses a nested loop to compound the interest.
+*/
+import javax.swing.JOptionPane;
+
+public class project9
+{
+   public static String investment(double invest, double targ_val, double rate)
+   {
+      int years = 0;
+   
+        do
+        {
+        invest = (invest * (1 + (.01 * rate)));
+       years++;
+        }while (invest <= targ_val);
+        
+       return ("After " + years + " years at " + rate + "%, your intial investment will be valued at " + invest);
+   }
+
+
+   public static void main (String [] args)
+      {
+      String numStr1, numStr2, numStr3 , result, value;
+      double invest;
+      double targ_val;
+      double rate;
+      int again;
+            
+         
+         do 
+         {
+         numStr1 = JOptionPane.showInputDialog ("Please enter your inital investment:");
+         invest = Integer.parseInt(numStr1);
+         
+         numStr2 = JOptionPane.showInputDialog ("Please enter your target value:");
+         targ_val = Integer.parseInt(numStr2);
+         
+         numStr3 = JOptionPane.showInputDialog ("Please enter your interest rate (for example, 5 for 5%):");
+         rate = Integer.parseInt(numStr3);
+         
+         value = investment(invest, targ_val, rate);
+
+         result = value;
+
+         JOptionPane.showMessageDialog (null, result);
+         again = JOptionPane.showConfirmDialog (null, "Do Another?");
+         }
+      while (again == JOptionPane.YES_OPTION);
+           
+        }
